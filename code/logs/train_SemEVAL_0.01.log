@@ -1,0 +1,117 @@
+processId: 16192
+prarent processId: 1
+{
+    "train_set": "../SemEval2DocRED/train_annotated_0.01.json",
+    "dev_set": "../SemEval2DocRED/dev.json",
+    "test_set": "../SemEval2DocRED/test.json",
+    "train_set_save": "../SemEval2DocRED/prepro_data/train_BERT.pkl",
+    "dev_set_save": "../SemEval2DocRED/prepro_data/dev_BERT.pkl",
+    "test_set_save": "../SemEval2DocRED/prepro_data/test_BERT.pkl",
+    "checkpoint_dir": "checkpoint",
+    "fig_result_dir": "fig_result",
+    "model_name": "SemEVAL_0.01",
+    "pretrain_model": "",
+    "vocabulary_size": 200000,
+    "relation_nums": 11,
+    "entity_type_num": 7,
+    "max_entity_num": 80,
+    "word_pad": 0,
+    "entity_type_pad": 0,
+    "entity_id_pad": 0,
+    "word_emb_size": 10,
+    "pre_train_word": false,
+    "data_word_vec": null,
+    "finetune_word": false,
+    "use_entity_type": true,
+    "entity_type_size": 20,
+    "use_entity_id": true,
+    "entity_id_size": 20,
+    "nlayers": 1,
+    "lstm_hidden_size": 32,
+    "lstm_dropout": 0.1,
+    "lr": 0.001,
+    "batch_size": 5,
+    "test_batch_size": 16,
+    "epoch": 300,
+    "test_epoch": 1,
+    "weight_decay": 0.0001,
+    "negativa_alpha": 4.0,
+    "log_step": 20,
+    "save_model_freq": 15,
+    "mention_drop": false,
+    "gcn_layers": 2,
+    "gcn_dim": 808,
+    "dropout": 0.6,
+    "activation": "relu",
+    "bert_hid_size": 768,
+    "bert_path": "../PLM/bert-base-uncased",
+    "bert_fix": false,
+    "coslr": true,
+    "clip": -1,
+    "k_fold": "none",
+    "use_model": "bert",
+    "input_theta": -1,
+    "transfer_learning": false
+}
+Reading data from ../SemEval2DocRED/train_annotated_0.01.json.
+load preprocessed data from ../SemEval2DocRED/prepro_data/train_BERT.pkl.
+Reading data from ../SemEval2DocRED/dev.json.
+load preprocessed data from ../SemEval2DocRED/prepro_data/dev_BERT.pkl.
+total parameters: 216617540
+2021-06-30 15:19:16.888989 training from scratch with lr 0.001
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+False
+2021-06-30 15:19:16.913906 begin..
+/home/ubuntu/anaconda3/envs/GAIN/lib/python3.7/site-packages/torch/optim/lr_scheduler.py:143: UserWarning: The epoch parameter in `scheduler.step()` was not necessary and is being deprecated where possible. Please use `scheduler.step()` to step the scheduler. During the deprecation, if epoch is different from None, the closed form is used instead of the new chainable form, where available. Please open an issue if you are unable to replicate your use case: https://github.com/pytorch/pytorch/issues/new/choose.
+  warnings.warn(EPOCH_DEPRECATION_WARNING, UserWarning)
+2021-06-30 15:19:35.465493 | epoch  1 | step   20 |  ms/b 927.57 | train loss 465.536 | NA acc: 0.82 | not NA acc: 0.09  | tot acc: 0.46 
+2021-06-30 15:19:53.004455 | epoch  1 | step   40 |  ms/b 876.93 | train loss 195.665 | NA acc: 0.91 | not NA acc: 0.10  | tot acc: 0.51 
+2021-06-30 15:20:10.275283 | epoch  1 | step   60 |  ms/b 863.53 | train loss 161.425 | NA acc: 0.94 | not NA acc: 0.16  | tot acc: 0.55 
+2021-06-30 15:20:28.741736 | epoch  1 | step   80 |  ms/b 923.31 | train loss 144.965 | NA acc: 0.95 | not NA acc: 0.19  | tot acc: 0.57 
+2021-06-30 15:20:45.852582 | epoch  1 | step  100 |  ms/b 855.53 | train loss 134.731 | NA acc: 0.96 | not NA acc: 0.23  | tot acc: 0.60 
+2021-06-30 15:21:02.539490 | epoch  1 | step  120 |  ms/b 834.34 | train loss 126.045 | NA acc: 0.97 | not NA acc: 0.27  | tot acc: 0.62 
+2021-06-30 15:21:19.615863 | epoch  1 | step  140 |  ms/b 853.80 | train loss 112.724 | NA acc: 0.97 | not NA acc: 0.30  | tot acc: 0.64 
+2021-06-30 15:21:36.333724 | epoch  1 | step  160 |  ms/b 835.88 | train loss 105.133 | NA acc: 0.98 | not NA acc: 0.33  | tot acc: 0.65 
+2021-06-30 15:21:36.333943 -----------------------------------------------------------------------------------------
+step: 0/32
+step: 1/32
+step: 2/32
+step: 3/32
+step: 4/32
+step: 5/32
+step: 6/32
+step: 7/32
+step: 8/32
+step: 9/32
+step: 10/32
+step: 11/32
+step: 12/32
+step: 13/32
+step: 14/32
+step: 15/32
+step: 16/32
+step: 17/32
+step: 18/32
+step: 19/32
+step: 20/32
+step: 21/32
+step: 22/32
+step: 23/32
+step: 24/32
+step: 25/32
+step: 26/32
+step: 27/32
+step: 28/32
+step: 29/32
+step: 30/32
+step: 31/32
+2021-06-30 15:21:43.598491 ALL  : Theta 0.3668 | F1 0.6223 | AUC 0.6763
+2021-06-30 15:21:43.606768 Ignore ma_f1 0.6207 | inhput_theta 0.3668 test_result P 0.6805 test_result R 0.5680 test_result F1 0.6192 | AUC 0.6740
+2021-06-30 15:21:43.608821 | epoch   1 | time:  7.27s
+2021-06-30 15:21:43.608867 -----------------------------------------------------------------------------------------
+/home/ubuntu/anaconda3/envs/GAIN/lib/python3.7/site-packages/torch/optim/lr_scheduler.py:143: UserWarning: The epoch parameter in `scheduler.step()` was not necessary and is being deprecated where possible. Please use `scheduler.step()` to step the scheduler. During the deprecation, if epoch is different from None, the closed form is used instead of the new chainable form, where available. Please open an issue if you are unable to replicate your use case: https://github.com/pytorch/pytorch/issues/new/choose.
+  warnings.warn(EPOCH_DEPRECATION_WARNING, UserWarning)
+2021-06-30 15:22:05.392064 | epoch  2 | step  180 |  ms/b 999.20 | train loss 87.737 | NA acc: 1.00 | not NA acc: 0.59  | tot acc: 0.80 
+2021-06-30 15:22:24.498750 | epoch  2 | step  200 |  ms/b 955.32 | train loss 77.480 | NA acc: 1.00 | not NA acc: 0.64  | tot acc: 0.82 
+2021-06-30 15:22:41.146386 | epoch  2 | step  220 |  ms/b 832.36 | train loss 84.011 | NA acc: 1.00 | not NA acc: 0.64  | tot acc: 0.82 
+2021-06-30 15:22:58.607644 | epoch  2 | step  240 |  ms/b 873.05 | train loss 77.829 | NA acc: 1.00 | not NA acc: 0.66  | tot acc: 0.83 
