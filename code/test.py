@@ -45,7 +45,6 @@ def test(model, dataloader, modelname, id2rel, input_theta=-1, output=False, is_
                                 entity_graphs=d['entity_graphs'],
                                 ht_pair_distance=d['ht_pair_distance']
                                 )
-            print("predictions: ", predictions.shape)
             predict_re = torch.sigmoid(predictions)
 
         predict_re = predict_re.data.cpu().numpy()
