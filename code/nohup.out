@@ -1,0 +1,493 @@
+processId: 13367
+prarent processId: 13366
+{
+    "train_set": "../SemEval2DocRED/train_annotated_0.1.json",
+    "dev_set": "../SemEval2DocRED/dev.json",
+    "test_set": "../SemEval2DocRED/test.json",
+    "train_set_save": "../SemEval2DocRED/prepro_data/train_BERT.pkl",
+    "dev_set_save": "../SemEval2DocRED/prepro_data/dev_BERT.pkl",
+    "test_set_save": "../SemEval2DocRED/prepro_data/test_BERT.pkl",
+    "checkpoint_dir": "checkpoint",
+    "fig_result_dir": "fig_result",
+    "model_name": "GAIN_BERT_Pretrain",
+    "pretrain_model": "GAIN_BERT_base_best.pt",
+    "vocabulary_size": 200000,
+    "relation_nums": 97,
+    "entity_type_num": 7,
+    "max_entity_num": 80,
+    "word_pad": 0,
+    "entity_type_pad": 0,
+    "entity_id_pad": 0,
+    "word_emb_size": 10,
+    "pre_train_word": false,
+    "data_word_vec": null,
+    "finetune_word": false,
+    "use_entity_type": true,
+    "entity_type_size": 0,
+    "use_entity_id": true,
+    "entity_id_size": 20,
+    "nlayers": 1,
+    "lstm_hidden_size": 32,
+    "lstm_dropout": 0.1,
+    "lr": 0.001,
+    "batch_size": 5,
+    "test_batch_size": 16,
+    "epoch": 300,
+    "test_epoch": 5,
+    "weight_decay": 0.0001,
+    "negativa_alpha": 4.0,
+    "log_step": 20,
+    "save_model_freq": 3,
+    "mention_drop": false,
+    "gcn_layers": 2,
+    "gcn_dim": 768,
+    "dropout": 0.6,
+    "activation": "relu",
+    "bert_hid_size": 788,
+    "bert_path": "../PLM/bert-base-uncased",
+    "bert_fix": false,
+    "coslr": true,
+    "clip": -1,
+    "k_fold": "none",
+    "use_model": "bert",
+    "input_theta": -1,
+    "transfer_learning": true
+}
+Traceback (most recent call last):
+  File "train.py", line 314, in <module>
+    train(opt)
+  File "train.py", line 33, in train
+    model = GAIN_BERT(opt)
+  File "/mnt/srv/home/dlpc.18/graph/GAIN_Pretrained/GAIN/code/models/GAIN.py", line 258, in __init__
+    assert self.gcn_dim == config.bert_hid_size + config.entity_id_size + config.entity_type_size
+AssertionError
+processId: 13411
+prarent processId: 13410
+{
+    "train_set": "../SemEval2DocRED/train_annotated_0.1.json",
+    "dev_set": "../SemEval2DocRED/dev.json",
+    "test_set": "../SemEval2DocRED/test.json",
+    "train_set_save": "../SemEval2DocRED/prepro_data/train_BERT.pkl",
+    "dev_set_save": "../SemEval2DocRED/prepro_data/dev_BERT.pkl",
+    "test_set_save": "../SemEval2DocRED/prepro_data/test_BERT.pkl",
+    "checkpoint_dir": "checkpoint",
+    "fig_result_dir": "fig_result",
+    "model_name": "GAIN_BERT_Pretrain",
+    "pretrain_model": "GAIN_BERT_base_best.pt",
+    "vocabulary_size": 200000,
+    "relation_nums": 97,
+    "entity_type_num": 7,
+    "max_entity_num": 80,
+    "word_pad": 0,
+    "entity_type_pad": 0,
+    "entity_id_pad": 0,
+    "word_emb_size": 10,
+    "pre_train_word": false,
+    "data_word_vec": null,
+    "finetune_word": false,
+    "use_entity_type": true,
+    "entity_type_size": 0,
+    "use_entity_id": true,
+    "entity_id_size": 20,
+    "nlayers": 1,
+    "lstm_hidden_size": 32,
+    "lstm_dropout": 0.1,
+    "lr": 0.001,
+    "batch_size": 5,
+    "test_batch_size": 16,
+    "epoch": 300,
+    "test_epoch": 5,
+    "weight_decay": 0.0001,
+    "negativa_alpha": 4.0,
+    "log_step": 20,
+    "save_model_freq": 3,
+    "mention_drop": false,
+    "gcn_layers": 2,
+    "gcn_dim": 768,
+    "dropout": 0.6,
+    "activation": "relu",
+    "bert_hid_size": 788,
+    "bert_path": "../PLM/bert-base-uncased",
+    "bert_fix": false,
+    "coslr": true,
+    "clip": -1,
+    "k_fold": "none",
+    "use_model": "bert",
+    "input_theta": -1,
+    "transfer_learning": true
+}
+Traceback (most recent call last):
+  File "train.py", line 314, in <module>
+    train(opt)
+  File "train.py", line 33, in train
+    model = GAIN_BERT(opt)
+  File "/mnt/srv/home/dlpc.18/graph/GAIN_Pretrained/GAIN/code/models/GAIN.py", line 252, in __init__
+    self.bert = BertModel.from_pretrained(config.bert_path)
+  File "/home/M2021080/anaconda3/envs/GAIN/lib/python3.7/site-packages/transformers/modeling_utils.py", line 852, in from_pretrained
+    model = cls(config, *model_args, **model_kwargs)
+  File "/home/M2021080/anaconda3/envs/GAIN/lib/python3.7/site-packages/transformers/modeling_bert.py", line 733, in __init__
+    self.init_weights()
+  File "/home/M2021080/anaconda3/envs/GAIN/lib/python3.7/site-packages/transformers/modeling_utils.py", line 591, in init_weights
+    self.apply(self._init_weights)
+  File "/home/M2021080/anaconda3/envs/GAIN/lib/python3.7/site-packages/torch/nn/modules/module.py", line 616, in apply
+    module.apply(fn)
+  File "/home/M2021080/anaconda3/envs/GAIN/lib/python3.7/site-packages/torch/nn/modules/module.py", line 616, in apply
+    module.apply(fn)
+  File "/home/M2021080/anaconda3/envs/GAIN/lib/python3.7/site-packages/torch/nn/modules/module.py", line 617, in apply
+    fn(self)
+  File "/home/M2021080/anaconda3/envs/GAIN/lib/python3.7/site-packages/transformers/modeling_bert.py", line 605, in _init_weights
+    module.weight.data.normal_(mean=0.0, std=self.config.initializer_range)
+KeyboardInterrupt
+processId: 13432
+prarent processId: 13431
+{
+    "train_set": "../SemEval2DocRED/train_annotated_0.1.json",
+    "dev_set": "../SemEval2DocRED/dev.json",
+    "test_set": "../SemEval2DocRED/test.json",
+    "train_set_save": "../SemEval2DocRED/prepro_data/train_BERT.pkl",
+    "dev_set_save": "../SemEval2DocRED/prepro_data/dev_BERT.pkl",
+    "test_set_save": "../SemEval2DocRED/prepro_data/test_BERT.pkl",
+    "checkpoint_dir": "checkpoint",
+    "fig_result_dir": "fig_result",
+    "model_name": "GAIN_BERT_Pretrain",
+    "pretrain_model": "GAIN_BERT_base_best.pt",
+    "vocabulary_size": 200000,
+    "relation_nums": 97,
+    "entity_type_num": 7,
+    "max_entity_num": 80,
+    "word_pad": 0,
+    "entity_type_pad": 0,
+    "entity_id_pad": 0,
+    "word_emb_size": 10,
+    "pre_train_word": false,
+    "data_word_vec": null,
+    "finetune_word": false,
+    "use_entity_type": true,
+    "entity_type_size": 0,
+    "use_entity_id": true,
+    "entity_id_size": 20,
+    "nlayers": 1,
+    "lstm_hidden_size": 32,
+    "lstm_dropout": 0.1,
+    "lr": 0.001,
+    "batch_size": 5,
+    "test_batch_size": 16,
+    "epoch": 300,
+    "test_epoch": 5,
+    "weight_decay": 0.0001,
+    "negativa_alpha": 4.0,
+    "log_step": 20,
+    "save_model_freq": 3,
+    "mention_drop": false,
+    "gcn_layers": 2,
+    "gcn_dim": 768,
+    "dropout": 0.6,
+    "activation": "relu",
+    "bert_hid_size": 788,
+    "bert_path": "../PLM/bert-base-uncased",
+    "bert_fix": false,
+    "coslr": true,
+    "clip": -1,
+    "k_fold": "none",
+    "use_model": "bert",
+    "input_theta": -1,
+    "transfer_learning": true
+}
+Traceback (most recent call last):
+  File "train.py", line 314, in <module>
+    train(opt)
+  File "train.py", line 33, in train
+    model = GAIN_BERT(opt)
+  File "/mnt/srv/home/dlpc.18/graph/GAIN_Pretrained/GAIN/code/models/GAIN.py", line 258, in __init__
+    assert self.gcn_dim == config.bert_hid_size + config.entity_id_size + config.entity_type_size
+AssertionError
+processId: 13467
+prarent processId: 13466
+{
+    "train_set": "../SemEval2DocRED/train_annotated_0.1.json",
+    "dev_set": "../SemEval2DocRED/dev.json",
+    "test_set": "../SemEval2DocRED/test.json",
+    "train_set_save": "../SemEval2DocRED/prepro_data/train_BERT.pkl",
+    "dev_set_save": "../SemEval2DocRED/prepro_data/dev_BERT.pkl",
+    "test_set_save": "../SemEval2DocRED/prepro_data/test_BERT.pkl",
+    "checkpoint_dir": "checkpoint",
+    "fig_result_dir": "fig_result",
+    "model_name": "GAIN_BERT_Pretrain",
+    "pretrain_model": "GAIN_BERT_base_best.pt",
+    "vocabulary_size": 200000,
+    "relation_nums": 97,
+    "entity_type_num": 7,
+    "max_entity_num": 80,
+    "word_pad": 0,
+    "entity_type_pad": 0,
+    "entity_id_pad": 0,
+    "word_emb_size": 10,
+    "pre_train_word": false,
+    "data_word_vec": null,
+    "finetune_word": false,
+    "use_entity_type": true,
+    "entity_type_size": 0,
+    "use_entity_id": true,
+    "entity_id_size": 20,
+    "nlayers": 1,
+    "lstm_hidden_size": 32,
+    "lstm_dropout": 0.1,
+    "lr": 0.001,
+    "batch_size": 5,
+    "test_batch_size": 16,
+    "epoch": 300,
+    "test_epoch": 5,
+    "weight_decay": 0.0001,
+    "negativa_alpha": 4.0,
+    "log_step": 20,
+    "save_model_freq": 3,
+    "mention_drop": false,
+    "gcn_layers": 2,
+    "gcn_dim": 768,
+    "dropout": 0.6,
+    "activation": "relu",
+    "bert_hid_size": 788,
+    "bert_path": "../PLM/bert-base-uncased",
+    "bert_fix": false,
+    "coslr": true,
+    "clip": -1,
+    "k_fold": "none",
+    "use_model": "bert",
+    "input_theta": -1,
+    "transfer_learning": true
+}
+Traceback (most recent call last):
+  File "train.py", line 314, in <module>
+    train(opt)
+  File "train.py", line 33, in train
+    model = GAIN_BERT(opt)
+  File "/mnt/srv/home/dlpc.18/graph/GAIN_Pretrained/GAIN/code/models/GAIN.py", line 258, in __init__
+    assert self.gcn_dim == config.bert_hid_size + config.entity_id_size + config.entity_type_size
+AssertionError
+Traceback (most recent call last):
+  File "train.py", line 6, in <module>
+    import torch
+  File "/home/M2021080/anaconda3/envs/GAIN/lib/python3.7/site-packages/torch/__init__.py", line 629, in <module>
+    from .functional import *  # noqa: F403
+  File "/home/M2021080/anaconda3/envs/GAIN/lib/python3.7/site-packages/torch/functional.py", line 6, in <module>
+    import torch.nn.functional as F
+  File "/home/M2021080/anaconda3/envs/GAIN/lib/python3.7/site-packages/torch/nn/__init__.py", line 1, in <module>
+    from .modules import *  # noqa: F403
+  File "/home/M2021080/anaconda3/envs/GAIN/lib/python3.7/site-packages/torch/nn/modules/__init__.py", line 2, in <module>
+    from .linear import Identity, Linear, Bilinear, LazyLinear
+  File "/home/M2021080/anaconda3/envs/GAIN/lib/python3.7/site-packages/torch/nn/modules/linear.py", line 6, in <module>
+    from .. import functional as F
+  File "/home/M2021080/anaconda3/envs/GAIN/lib/python3.7/site-packages/torch/nn/functional.py", line 11, in <module>
+    from .._jit_internal import boolean_dispatch, _overload, BroadcastingList1, BroadcastingList2, BroadcastingList3
+  File "/home/M2021080/anaconda3/envs/GAIN/lib/python3.7/site-packages/torch/_jit_internal.py", line 23, in <module>
+    import torch.distributed.rpc
+  File "/home/M2021080/anaconda3/envs/GAIN/lib/python3.7/site-packages/torch/distributed/rpc/__init__.py", line 73, in <module>
+    from .options import TensorPipeRpcBackendOptions  # noqa: F401
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 963, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 900, in _find_spec
+KeyboardInterrupt
+processId: 13524
+prarent processId: 13523
+{
+    "train_set": "../SemEval2DocRED/train_annotated_0.1.json",
+    "dev_set": "../SemEval2DocRED/dev.json",
+    "test_set": "../SemEval2DocRED/test.json",
+    "train_set_save": "../SemEval2DocRED/prepro_data/train_BERT.pkl",
+    "dev_set_save": "../SemEval2DocRED/prepro_data/dev_BERT.pkl",
+    "test_set_save": "../SemEval2DocRED/prepro_data/test_BERT.pkl",
+    "checkpoint_dir": "checkpoint",
+    "fig_result_dir": "fig_result",
+    "model_name": "GAIN_BERT_Pretrain",
+    "pretrain_model": "GAIN_BERT_base_best.pt",
+    "vocabulary_size": 200000,
+    "relation_nums": 97,
+    "entity_type_num": 7,
+    "max_entity_num": 80,
+    "word_pad": 0,
+    "entity_type_pad": 0,
+    "entity_id_pad": 0,
+    "word_emb_size": 10,
+    "pre_train_word": false,
+    "data_word_vec": null,
+    "finetune_word": false,
+    "use_entity_type": true,
+    "entity_type_size": 0,
+    "use_entity_id": true,
+    "entity_id_size": 20,
+    "nlayers": 1,
+    "lstm_hidden_size": 32,
+    "lstm_dropout": 0.1,
+    "lr": 0.001,
+    "batch_size": 5,
+    "test_batch_size": 16,
+    "epoch": 300,
+    "test_epoch": 5,
+    "weight_decay": 0.0001,
+    "negativa_alpha": 4.0,
+    "log_step": 20,
+    "save_model_freq": 3,
+    "mention_drop": false,
+    "gcn_layers": 2,
+    "gcn_dim": 768,
+    "dropout": 0.6,
+    "activation": "relu",
+    "bert_hid_size": 768,
+    "bert_path": "../PLM/bert-base-uncased",
+    "bert_fix": false,
+    "coslr": true,
+    "clip": -1,
+    "k_fold": "none",
+    "use_model": "bert",
+    "input_theta": -1,
+    "transfer_learning": true
+}
+Traceback (most recent call last):
+  File "train.py", line 314, in <module>
+    train(opt)
+  File "train.py", line 33, in train
+    model = GAIN_BERT(opt)
+  File "/mnt/srv/home/dlpc.18/graph/GAIN_Pretrained/GAIN/code/models/GAIN.py", line 258, in __init__
+    assert self.gcn_dim == config.bert_hid_size + config.entity_id_size + config.entity_type_size
+AssertionError
+processId: 13559
+prarent processId: 13558
+{
+    "train_set": "../SemEval2DocRED/train_annotated_0.1.json",
+    "dev_set": "../SemEval2DocRED/dev.json",
+    "test_set": "../SemEval2DocRED/test.json",
+    "train_set_save": "../SemEval2DocRED/prepro_data/train_BERT.pkl",
+    "dev_set_save": "../SemEval2DocRED/prepro_data/dev_BERT.pkl",
+    "test_set_save": "../SemEval2DocRED/prepro_data/test_BERT.pkl",
+    "checkpoint_dir": "checkpoint",
+    "fig_result_dir": "fig_result",
+    "model_name": "GAIN_BERT_Pretrain",
+    "pretrain_model": "GAIN_BERT_base_best.pt",
+    "vocabulary_size": 200000,
+    "relation_nums": 97,
+    "entity_type_num": 7,
+    "max_entity_num": 80,
+    "word_pad": 0,
+    "entity_type_pad": 0,
+    "entity_id_pad": 0,
+    "word_emb_size": 10,
+    "pre_train_word": false,
+    "data_word_vec": null,
+    "finetune_word": false,
+    "use_entity_type": true,
+    "entity_type_size": 0,
+    "use_entity_id": true,
+    "entity_id_size": 20,
+    "nlayers": 1,
+    "lstm_hidden_size": 32,
+    "lstm_dropout": 0.1,
+    "lr": 0.001,
+    "batch_size": 5,
+    "test_batch_size": 16,
+    "epoch": 300,
+    "test_epoch": 5,
+    "weight_decay": 0.0001,
+    "negativa_alpha": 4.0,
+    "log_step": 20,
+    "save_model_freq": 3,
+    "mention_drop": false,
+    "gcn_layers": 2,
+    "gcn_dim": 768,
+    "dropout": 0.6,
+    "activation": "relu",
+    "bert_hid_size": 788,
+    "bert_path": "../PLM/bert-base-uncased",
+    "bert_fix": false,
+    "coslr": true,
+    "clip": -1,
+    "k_fold": "none",
+    "use_model": "bert",
+    "input_theta": -1,
+    "transfer_learning": true
+}
+Traceback (most recent call last):
+  File "train.py", line 314, in <module>
+    train(opt)
+  File "train.py", line 33, in train
+    model = GAIN_BERT(opt)
+  File "/mnt/srv/home/dlpc.18/graph/GAIN_Pretrained/GAIN/code/models/GAIN.py", line 258, in __init__
+    assert self.gcn_dim == config.bert_hid_size + config.entity_id_size + config.entity_type_size
+AssertionError
+processId: 13792
+prarent processId: 13791
+{
+    "train_set": "../SemEval2DocRED/train_annotated_0.1.json",
+    "dev_set": "../SemEval2DocRED/dev.json",
+    "test_set": "../SemEval2DocRED/test.json",
+    "train_set_save": "../SemEval2DocRED/prepro_data/train_BERT.pkl",
+    "dev_set_save": "../SemEval2DocRED/prepro_data/dev_BERT.pkl",
+    "test_set_save": "../SemEval2DocRED/prepro_data/test_BERT.pkl",
+    "checkpoint_dir": "checkpoint",
+    "fig_result_dir": "fig_result",
+    "model_name": "GAIN_BERT_Pretrain",
+    "pretrain_model": "GAIN_BERT_base_best.pt",
+    "vocabulary_size": 200000,
+    "relation_nums": 97,
+    "entity_type_num": 7,
+    "max_entity_num": 80,
+    "word_pad": 0,
+    "entity_type_pad": 0,
+    "entity_id_pad": 0,
+    "word_emb_size": 10,
+    "pre_train_word": false,
+    "data_word_vec": null,
+    "finetune_word": false,
+    "use_entity_type": true,
+    "entity_type_size": 20,
+    "use_entity_id": true,
+    "entity_id_size": 20,
+    "nlayers": 1,
+    "lstm_hidden_size": 32,
+    "lstm_dropout": 0.1,
+    "lr": 0.001,
+    "batch_size": 5,
+    "test_batch_size": 16,
+    "epoch": 300,
+    "test_epoch": 5,
+    "weight_decay": 0.0001,
+    "negativa_alpha": 4.0,
+    "log_step": 20,
+    "save_model_freq": 3,
+    "mention_drop": false,
+    "gcn_layers": 2,
+    "gcn_dim": 808,
+    "dropout": 0.6,
+    "activation": "relu",
+    "bert_hid_size": 768,
+    "bert_path": "../PLM/bert-base-uncased",
+    "bert_fix": false,
+    "coslr": true,
+    "clip": -1,
+    "k_fold": "none",
+    "use_model": "bert",
+    "input_theta": -1,
+    "transfer_learning": true
+}
+Reading data from ../SemEval2DocRED/train_annotated_0.1.json.
+load preprocessed data from ../SemEval2DocRED/prepro_data/train_BERT.pkl.
+Reading data from ../SemEval2DocRED/dev.json.
+load preprocessed data from ../SemEval2DocRED/prepro_data/dev_BERT.pkl.
+total parameters: 217034554
+2021-06-29 15:00:12.499818 load model from GAIN_BERT_base_best.pt
+2021-06-29 15:00:12.499906 resume from epoch 86 with lr 0.001
+Traceback (most recent call last):
+  File "train.py", line 316, in <module>
+    train(opt)
+  File "train.py", line 76, in train
+    model = get_cuda(model)
+  File "/mnt/srv/home/dlpc.18/graph/GAIN_Pretrained/GAIN/code/utils.py", line 9, in get_cuda
+    return tensor.cuda()
+  File "/home/M2021080/anaconda3/envs/GAIN/lib/python3.7/site-packages/torch/nn/modules/module.py", line 637, in cuda
+    return self._apply(lambda t: t.cuda(device))
+  File "/home/M2021080/anaconda3/envs/GAIN/lib/python3.7/site-packages/torch/nn/modules/module.py", line 530, in _apply
+    module._apply(fn)
+  File "/home/M2021080/anaconda3/envs/GAIN/lib/python3.7/site-packages/torch/nn/modules/module.py", line 552, in _apply
+    param_applied = fn(param)
+  File "/home/M2021080/anaconda3/envs/GAIN/lib/python3.7/site-packages/torch/nn/modules/module.py", line 637, in <lambda>
+    return self._apply(lambda t: t.cuda(device))
+KeyboardInterrupt

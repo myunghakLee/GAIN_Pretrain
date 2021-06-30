@@ -298,6 +298,7 @@ class GAIN_BERT(nn.Module):
         bsz, slen = words.size()
 
         encoder_outputs, sentence_cls = self.bert(input_ids=words, attention_mask=mask)
+
         # encoder_outputs[mask == 0] = 0
 
         if self.config.use_entity_type:

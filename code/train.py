@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import time
 
 import matplotlib
@@ -18,38 +19,49 @@ matplotlib.use('Agg')
 # for ablation
 # from models.GAIN_nomention import GAIN_GloVe, GAIN_BERT
 
+# +
 def train(opt):
     if opt.use_model == 'bert':
         # datasets
-        train_set = BERTDGLREDataset(opt.train_set, opt.train_set_save, word2id, ner2id, rel2id, dataset_type='train',
-                                     opt=opt)
-        dev_set = BERTDGLREDataset(opt.dev_set, opt.dev_set_save, word2id, ner2id, rel2id, dataset_type='dev',
-                                   instance_in_train=train_set.instance_in_train, opt=opt)
-
-        # dataloaders
-        train_loader = DGLREDataloader(train_set, batch_size=opt.batch_size, shuffle=True,
-                                       negativa_alpha=opt.negativa_alpha)
-        dev_loader = DGLREDataloader(dev_set, batch_size=opt.test_batch_size, dataset_type='dev')
-
+        '''
+         train_set: trainset path
+         train_set_save: trainset save path
+         word2id : word2id
+         ner2id: ner2id
+         rel2id: rel2id
+        '''
         model = GAIN_BERT(opt)
+        optSemEval = opt
 
-    elif opt.use_model == 'bilstm':
-        # datasets
-        train_set = DGLREDataset(opt.train_set, opt.train_set_save, word2id, ner2id, rel2id, dataset_type='train',
-                                 opt=opt)
-        dev_set = DGLREDataset(opt.dev_set, opt.dev_set_save, word2id, ner2id, rel2id, dataset_type='dev',
-                               instance_in_train=train_set.instance_in_train, opt=opt)
+        with open ("../SemEval2DocRED/rel2id.json") as d:
+            opt.rel2id = json.load(d)
+        with open ("../SemEval2DocRED/word2id.json") as d:
+            opt.word2id = json.load(d)
 
+        opt.relation_nums = 11    
+        opt.use_entity_type = False
+        opt.gcn_dim = 788
+        opt.entity_type_size = 0
+#         opt = optSemEval
+        print(opt.train_set)
+        print(opt.train_set_save)
+        print(opt.rel2id)
+
+        train_set = BERTDGLREDataset(opt.train_set, opt.train_set_save, opt.word2id, ner2id, opt.rel2id, dataset_type='train',
+                                     opt=opt)
+#         print(train_set[0]['relation_multi_label'])
+        dev_set = BERTDGLREDataset(opt.dev_set, opt.dev_set_save, opt.word2id, ner2id, opt.rel2id, dataset_type='dev',
+                                   instance_in_train=train_set.instance_in_train, opt=opt)
         # dataloaders
         train_loader = DGLREDataloader(train_set, batch_size=opt.batch_size, shuffle=True,
-                                       negativa_alpha=opt.negativa_alpha)
-        dev_loader = DGLREDataloader(dev_set, batch_size=opt.test_batch_size, dataset_type='dev')
+                                       negativa_alpha=opt.negativa_alpha, relation_num=opt.relation_nums)
+        dev_loader = DGLREDataloader(dev_set, batch_size=opt.test_batch_size, dataset_type='dev', relation_num=opt.relation_nums)
+#         model = GAIN_BERT(opt)
 
-        model = GAIN_GloVe(opt)
+
     else:
         assert 1 == 2, 'please choose a model from [bert, bilstm].'
 
-    print(model.parameters)
     print_params(model)
 
     start_epoch = 1
@@ -68,7 +80,18 @@ def train(opt):
         logging('training from scratch with lr {}'.format(lr))
 
     model = get_cuda(model)
-
+    print("+++" * 100)
+    print(opt.transfer_learning)
+    if opt.transfer_learning:
+        print("TRANSFER LEARNING")
+        Pretrain_model = GAIN_BERT(optSemEval)
+        Pretrain_model.bert = model.bert
+        
+        for child in Pretrain_model.bert.children():
+            for param in child.parameters():
+                param.requires_grad = False        
+        model = get_cuda(Pretrain_model)
+        print(model)
     if opt.use_model == 'bert':
         bert_param_ids = list(map(id, model.bert.parameters()))
         base_params = filter(lambda p: p.requires_grad and id(p) not in bert_param_ids, model.parameters())
@@ -112,6 +135,8 @@ def train(opt):
     acc_NA, acc_not_NA, acc_total = Accuracy(), Accuracy(), Accuracy()
     logging('begin..')
 
+    
+    
     for epoch in range(start_epoch, opt.epoch + 1):
         start_time = time.time()
         for acc in [acc_NA, acc_not_NA, acc_total]:
@@ -121,7 +146,28 @@ def train(opt):
             relation_multi_label = d['relation_multi_label']
             relation_mask = d['relation_mask']
             relation_label = d['relation_label']
+            
+            dummy_input = {"words":d['context_idxs'],
+                                "src_lengths":d['context_word_length'],
+                                "mask":d['context_word_mask'],
+                                "entity_type":d['context_ner'],
+                                "entity_id":d['context_pos'],
+                                "mention_id":d['context_mention'],
+                                "distance":None,
+                                "entity2mention_table":d['entity2mention_table'],
+                                "graphs":d['graphs'],
+                                "h_t_pairs":d['h_t_pairs'],
+                                "relation_mask":relation_mask,
+                                "path_table":d['path_table'],
+                                "entity_graphs":d['entity_graphs'],
+                                "ht_pair_distance":d['ht_pair_distance']
+                          }
 
+
+#             print("=========================================================start=========================================================")
+            
+#             print(model)
+#             torch.onnx.export(model, (dummy_input), "bert.onnx")
             predictions = model(words=d['context_idxs'],
                                 src_lengths=d['context_word_length'],
                                 mask=d['context_word_mask'],
@@ -137,9 +183,54 @@ def train(opt):
                                 entity_graphs=d['entity_graphs'],
                                 ht_pair_distance=d['ht_pair_distance']
                                 )
+#             print("predictions : ", predictions.shape)
+#             for k in dummy_input.keys():
+#                 if k == "src_lengths" or k == "mask" or k == "entity_type"or k == "entity_id"or k == "mention_id":
+#                     print(f"{k} \t: {dummy_input[k]}")
+
+#                 elif k == "path_table":
+#                     print(f"{k} \t: {len(dummy_input[k])}")
+#                     print(f"{k} \t: {dummy_input[k][0].keys()}")
+#                     print(f"{k} \t: {dummy_input[k][0]}")
+                    
+#                 elif k == "entity2mention_table":
+#                     for i in range(1):
+#                         print(f"{k} \t: i,{dummy_input[k][i].shape}")
+                    
+                    
+#                 elif k == "distance" or k == "graphs" or k == "entity2mention_table" or k == "path_table" or k == "entity_graphs":
+#                     if k != "distance":
+#                         print(f"{k} \t: {len(dummy_input[k])}")
+#                     print(f"{k} \t: {dummy_input[k]}")
+#                 else:
+#                     print(f"{k} \t: {dummy_input[k].shape}")
+            
+
+    
+#             print("max entity_type", dummy_input["entity_type"])
+#             print("max entity id", dummy_input["entity_id"])
+#             print("max mention id", dummy_input["mention_id"])
+    
+#             print("prediction: ", predictions.shape)
+#             print("relation_multi_label: ", relation_multi_label.shape)
+#             print("relation_mask: ", relation_mask.shape)
+#             print("relation_mask: ", relation_mask)
+#             print("h_t_pairs: ", d['h_t_pairs'])
+#             print(predictions[0][0])
+            
+#             print(relation_multi_label.shape)
+#             for r in relation_multi_label[0]:
+#                 print(r)
+#             print("==========================================================end==========================================================")
+#             exit(True)
             loss = torch.sum(BCE(predictions, relation_multi_label) * relation_mask.unsqueeze(2)) / (
                     opt.relation_nums * torch.sum(relation_mask))
-
+            '''
+                predictions        :    torch.Size([batch, word_num, relation_num])
+                relation_multi_label :  torch.Size([batch, word_num, relation_num])
+                relation_mask      :    torch.Size([batch, word_num])
+                opt.relation_nums  :    97
+            '''
             optimizer.zero_grad()
             loss.backward()
 
@@ -156,13 +247,13 @@ def train(opt):
             for i in range(output.shape[0]):
                 for j in range(output.shape[1]):
                     label = relation_label[i][j]
-                    if label < 0:
+                    if label < 0: # batch 크기 맞춰주기 위해 padding한거 제외
                         break
 
                     is_correct = (output[i][j] == label)
-                    if label == 0:
+                    if label == 0: # label이 0인걸 맞추었을 때
                         acc_NA.add(is_correct)
-                    else:
+                    else: # label이 0이외의 것을 맞추었을 때
                         acc_not_NA.add(is_correct)
 
                     acc_total.add(is_correct)
@@ -185,7 +276,7 @@ def train(opt):
             logging('-' * 89)
             eval_start_time = time.time()
             model.eval()
-            ign_f1, ign_auc, pr_x, pr_y = test(model, dev_loader, model_name, id2rel=id2rel)
+            ign_f1, ign_auc, pr_x, pr_y = test(model, dev_loader, model_name, id2rel=id2rel, relation_num=opt.relation_nums)
             model.train()
             logging('| epoch {:3d} | time: {:5.2f}s'.format(epoch, time.time() - eval_start_time))
             logging('-' * 89)
@@ -220,7 +311,7 @@ def train(opt):
     print("Best epoch = %d | Best Ign F1 = %f" % (best_epoch, best_ign_f1))
     print("Storing best result...")
     print("Finish storing")
-
+# -
 
 if __name__ == '__main__':
     print('processId:', os.getpid())

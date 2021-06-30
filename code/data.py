@@ -576,7 +576,8 @@ class DGLREDataloader(DataLoader):
         relation_mask = torch.Tensor(self.batch_size, self.h_t_limit).cpu()
         relation_label = torch.LongTensor(self.batch_size, self.h_t_limit).cpu()
         ht_pair_distance = torch.LongTensor(self.batch_size, self.h_t_limit).cpu()
-
+        
+        
         for idx, minibatch in enumerate(self.batches):
             cur_bsz = len(minibatch)
 

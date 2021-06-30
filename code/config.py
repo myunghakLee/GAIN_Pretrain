@@ -4,7 +4,7 @@ import os
 
 import numpy as np
 
-data_dir = '../data/'
+data_dir = '../SemEval2DocRED/'
 prepro_dir = os.path.join(data_dir, 'prepro_data/')
 if not os.path.exists(prepro_dir):
     os.mkdir(prepro_dir)
@@ -100,4 +100,8 @@ def get_opt():
     # binary classification threshold, automatically find optimal threshold when -1
     parser.add_argument('--input_theta', type=float, default=-1)
 
+    
+    
+    parser.add_argument('--transfer_learning', action='store_true')
+    
     return parser.parse_args()
