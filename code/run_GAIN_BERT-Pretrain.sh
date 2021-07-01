@@ -9,7 +9,7 @@ if true; then
   lr=0.001
   batch_size=5
   test_batch_size=16
-  epoch=100
+  epoch=400
   test_epoch=10
   log_step=20
   save_model_freq=40
