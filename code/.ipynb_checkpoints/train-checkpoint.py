@@ -56,12 +56,18 @@ def train(opt):
 #         print(train_set[0]['relation_multi_label'])
         dev_set = BERTDGLREDataset(opt.dev_set, opt.dev_set_save, opt.word2id, ner2id, opt.rel2id, dataset_type='dev',
                                    instance_in_train=train_set.instance_in_train, opt=opt)
+    
+        test_set = BERTDGLREDataset(opt.test_set, opt.test_set_save, opt.word2id, ner2id, opt.rel2id, dataset_type='test',
+                                   instance_in_train=train_set.instance_in_train, opt=opt)
+    
+    
         # dataloaders
         train_loader = DGLREDataloader(train_set, batch_size=opt.batch_size, shuffle=True,
                                        negativa_alpha=opt.negativa_alpha, relation_num=opt.relation_nums)
         dev_loader = DGLREDataloader(dev_set, batch_size=opt.test_batch_size, dataset_type='dev', relation_num=opt.relation_nums)
 #         model = GAIN_BERT(opt)
 
+        test_loader = DGLREDataloader(test_set, batch_size=opt.test_batch_size, dataset_type='test', relation_num=opt.relation_nums)
 
     else:
         assert 1 == 2, 'please choose a model from [bert, bilstm].'
@@ -277,6 +283,7 @@ def train(opt):
                 start_time = time.time()
 
         if epoch % opt.test_epoch == 0:
+            logging('VAL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
             logging('-' * 89)
             eval_start_time = time.time()
             model.eval()
@@ -303,7 +310,30 @@ def train(opt):
                 plt.legend(loc="upper right")
                 model_name = model_name.replace(".", "_")
                 plt.savefig(os.path.join(fig_result_dir, model_name))
+            logging('VAL FINISH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+                
+        if epoch == opt.epoch:
+            logging('TEST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+            logging('-' * 89)
+            eval_start_time = time.time()
+            model.eval()
+            ign_f1, ign_auc, pr_x, pr_y = test(model, test_loader, model_name, id2rel=id2rel, relation_num=opt.relation_nums)
+#             model.train()
+            logging('| epoch {:3d} | time: {:5.2f}s'.format(epoch, time.time() - eval_start_time))
+            logging('-' * 89)
 
+            if True:
+                path = os.path.join(checkpoint_dir, model_name + '_last.pt')
+                torch.save({
+                    'epoch': epoch,
+                    'checkpoint': model.state_dict(),
+                    'lr': lr,
+                    'best_ign_f1': ign_f1,
+                    'best_ign_auc': ign_auc,
+                    'best_epoch': epoch
+                }, path)
+            logging('TEST FINISH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+                
         if epoch % opt.save_model_freq == 0:
             path = os.path.join(checkpoint_dir, model_name + '_{}.pt'.format(epoch))
             torch.save({
@@ -326,7 +356,4 @@ if __name__ == '__main__':
     opt.data_word_vec = word2vec
     train(opt)
     print("FINISH!!!!!")
-    print("sys.exit")
-    import sys
-    sys.exit()
-    print("sys.exit")
+
