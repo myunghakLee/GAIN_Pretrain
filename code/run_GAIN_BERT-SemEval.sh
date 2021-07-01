@@ -10,7 +10,7 @@ if true; then
   batch_size=5
   test_batch_size=16
   epoch=300
-  test_epoch=1
+  test_epoch=10
   log_step=20
   save_model_freq=15
   negativa_alpha=4
