@@ -33,19 +33,23 @@ def train(opt):
         model = GAIN_BERT(opt)
         optSemEval = opt
 
-        with open ("../SemEval2DocRED/rel2id.json") as d:
-            opt.rel2id = json.load(d)
-        with open ("../SemEval2DocRED/word2id.json") as d:
-            opt.word2id = json.load(d)
+        if opt.transfer_learning:
+            with open ("../SemEval2DocRED/rel2id.json") as d:
+                opt.rel2id = json.load(d)
+            with open ("../SemEval2DocRED/word2id.json") as d:
+                opt.word2id = json.load(d)
 
-        opt.relation_nums = 11    
-        opt.use_entity_type = False
-        opt.gcn_dim = 788
-        opt.entity_type_size = 0
-#         opt = optSemEval
-        print(opt.train_set)
-        print(opt.train_set_save)
-        print(opt.rel2id)
+            opt.relation_nums = 11    
+            opt.use_entity_type = False
+            opt.gcn_dim = 788
+            opt.entity_type_size = 0
+    #         opt = optSemEval
+            print(opt.train_set)
+            print(opt.train_set_save)
+            print(opt.rel2id)
+        else:
+            opt.rel2id = rel2id
+            opt.word2id = word2id
 
         train_set = BERTDGLREDataset(opt.train_set, opt.train_set_save, opt.word2id, ner2id, opt.rel2id, dataset_type='train',
                                      opt=opt)
@@ -297,6 +301,7 @@ def train(opt):
 
                 plt.plot(pr_x, pr_y, lw=2, label=str(epoch))
                 plt.legend(loc="upper right")
+                model_name = model_name.replace(".", "_")
                 plt.savefig(os.path.join(fig_result_dir, model_name))
 
         if epoch % opt.save_model_freq == 0:
@@ -320,3 +325,8 @@ if __name__ == '__main__':
     print(json.dumps(opt.__dict__, indent=4))
     opt.data_word_vec = word2vec
     train(opt)
+    print("FINISH!!!!!")
+    print("sys.exit")
+    import sys
+    sys.exit()
+    print("sys.exit")

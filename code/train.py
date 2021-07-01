@@ -325,3 +325,5 @@ if __name__ == '__main__':
     print(json.dumps(opt.__dict__, indent=4))
     opt.data_word_vec = word2vec
     train(opt)
+    print("FINISH!!!!!")
+

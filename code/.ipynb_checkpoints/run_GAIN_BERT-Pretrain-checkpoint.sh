@@ -1,24 +1,24 @@
 #! /bin/bash
 export CUDA_VISIBLE_DEVICES=$1
-export DataRate=$2
+MODEL_STR=$2
 
 # -------------------GAIN_BERT_base Training Shell Script--------------------
 
 if true; then
-  model_name=GAIN_BERT_Pretrain
+  model_name=TransferLearninig${MODEL_STR}
   lr=0.001
   batch_size=5
   test_batch_size=16
-  epoch=6000
+  epoch=400
   test_epoch=10
   log_step=20
-  save_model_freq=30
+  save_model_freq=40
   negativa_alpha=4
   DataRate="_0.1"  
     
     
   nohup python3 -u train.py \
-    --train_set ../SemEval2DocRED/train_annotated${DataRate}.json \
+    --train_set ../SemEval2DocRED/train_annotated${MODEL_STR}.json \
     --train_set_save ../SemEval2DocRED/prepro_data/train_BERT.pkl \
     --dev_set ../SemEval2DocRED/dev.json \
     --dev_set_save ../SemEval2DocRED/prepro_data/dev_BERT.pkl \
